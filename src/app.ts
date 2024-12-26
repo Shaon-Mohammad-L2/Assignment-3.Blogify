@@ -17,7 +17,7 @@ const homeRoute = async (req: Request, res: Response) => {
   res.status(200).json({
     server: 'Active',
     success: true,
-    message: 'This is Home Routeeeeeeeeeeeeeeee.'
+    message: 'This is Home Route.'
   })
 }
 

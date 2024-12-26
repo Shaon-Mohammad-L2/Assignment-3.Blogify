@@ -27,7 +27,7 @@ const homeRoute = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(200).json({
         server: 'Active',
         success: true,
-        message: 'This is Home Routeeeeeeeeeeeeeeee.'
+        message: 'This is Home Route.'
     });
 });
 app.get('/', homeRoute);
