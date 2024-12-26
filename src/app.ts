@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express'
 import cors from 'cors'
 import routers from './app/routers'
+import notFound from './app/middleware/notFound'
+import globalErrorHandler from './app/middleware/globalErrorHandler'
 
 // app initialization
 const app = express()
@@ -22,5 +24,8 @@ const homeRoute = async (req: Request, res: Response) => {
 }
 
 app.get('/', homeRoute)
+
+app.use(globalErrorHandler as unknown as express.ErrorRequestHandler)
+app.use(notFound as unknown as express.ErrorRequestHandler)
 
 export default app
