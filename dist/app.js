@@ -21,7 +21,7 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 //router
-app.use('/api/v1/', routers_1.default);
+app.use('/api/', routers_1.default);
 // home route
 const homeRoute = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(200).json({

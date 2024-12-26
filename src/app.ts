@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(cors())
 
 //router
-app.use('/api/v1/', routers)
+app.use('/api/', routers)
 
 // home route
 const homeRoute = async (req: Request, res: Response) => {

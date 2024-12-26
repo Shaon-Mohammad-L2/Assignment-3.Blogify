@@ -17,3 +17,20 @@ async function main() {
 }
 
 main()
+
+// unhandle reject
+process.on('unhandledRejection', () => {
+  console.log('😡 Unhandle Reject is  Detected. Sutting Down....')
+  if (server) {
+    server.close(() => {
+      process.exit(1)
+    })
+  }
+  process.exit(1)
+})
+
+//  Uncaught Exception
+process.on('uncaughtException', () => {
+  console.log('😡 Uncaught Exception is  Detected. Sutting Down....')
+  process.exit(1)
+})
