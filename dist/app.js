@@ -24,7 +24,11 @@ app.use((0, cors_1.default)());
 app.use('/api/v1/', routers_1.default);
 // home route
 const homeRoute = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send('I am Active');
+    res.status(200).json({
+        server: 'Active',
+        success: true,
+        message: 'This is Home Routeeeeeeeeeeeeeeee.'
+    });
 });
 app.get('/', homeRoute);
 exports.default = app;
