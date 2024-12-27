@@ -17,11 +17,16 @@ const cors_1 = __importDefault(require("cors"));
 const routers_1 = __importDefault(require("./app/routers"));
 const notFound_1 = __importDefault(require("./app/middleware/notFound"));
 const globalErrorHandler_1 = __importDefault(require("./app/middleware/globalErrorHandler"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 // app initialization
 const app = (0, express_1.default)();
 // parsers
 app.use(express_1.default.json());
-app.use((0, cors_1.default)());
+app.use((0, cookie_parser_1.default)());
+app.use((0, cors_1.default)({
+    origin: ['http://localhost:5173', 'http://localhost:5174'],
+    credentials: true
+}));
 //router
 app.use('/api', routers_1.default);
 // home route

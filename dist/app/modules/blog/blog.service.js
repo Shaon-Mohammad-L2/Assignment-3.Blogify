@@ -12,7 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlogServices = void 0;
 const blog_model_1 = require("./blog.model");
 // create a blog.
-const createBlogIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+const createBlogIntoDB = (payload, user) => __awaiter(void 0, void 0, void 0, function* () {
+    payload.author = user.userId;
     const result = yield blog_model_1.Blog.create(payload);
     return result;
 });

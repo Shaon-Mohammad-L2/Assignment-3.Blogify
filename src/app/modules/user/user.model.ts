@@ -47,6 +47,11 @@ UserSchema.statics.isUserExistsByEmail = async function (email: string) {
   return await User.findOne({ email }).select('+password')
 }
 
+// this methods for checking user already exists in database.
+UserSchema.statics.isUserExistsBy_id = async function (id: string) {
+  return await User.findById(id).select('+password')
+}
+
 // pre middleware hook for password hashing before document save.
 UserSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(
@@ -61,5 +66,13 @@ UserSchema.post('save', function (doc, next) {
   doc.password = ''
   next()
 })
+
+// check password matched.
+UserSchema.statics.isPasswordMatched = async function (
+  plainTextPassword: string,
+  hashedPassword: string
+) {
+  return await bcrypt.compare(plainTextPassword, hashedPassword)
+}
 
 export const User = mongoose.model<TUser, UserModel>('User', UserSchema)

@@ -1,7 +1,8 @@
 import { Model } from 'mongoose'
 
-type TRole = 'admin' | 'user'
+export type TRole = 'admin' | 'user'
 export interface TUser {
+  _id?: string
   name: string
   email: string
   password: string
@@ -12,4 +13,9 @@ export interface TUser {
 
 export interface UserModel extends Model<TUser> {
   isUserExistsByEmail(email: string): Promise<TUser>
+  isUserExistsBy_id(id: string): Promise<TUser>
+  isPasswordMatched(
+    plainTextPassword: string,
+    hashedPassword: string
+  ): Promise<boolean>
 }

@@ -1,8 +1,10 @@
+import { JwtPayload } from 'jsonwebtoken'
 import { TBlog } from './blog.interface'
 import { Blog } from './blog.model'
 
 // create a blog.
-const createBlogIntoDB = async (payload: TBlog) => {
+const createBlogIntoDB = async (payload: TBlog, user: JwtPayload) => {
+  payload.author = user.userId
   const result = await Blog.create(payload)
   return result
 }

@@ -13,8 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthServices = void 0;
+const config_1 = __importDefault(require("../../config"));
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const user_model_1 = require("../user/user.model");
+const auth_utils_1 = require("./auth.utils");
 // user registration into db
 const registerUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     // checking user already exists
@@ -26,7 +28,40 @@ const registerUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, functi
     return result;
 });
 //user login
-const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () { });
+const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    // check user in data base.
+    const user = yield user_model_1.User.isUserExistsByEmail(payload === null || payload === void 0 ? void 0 : payload.email);
+    //check user is exists
+    if (!user) {
+        throw new AppError_1.default(403, 'Invalid credentials!');
+    }
+    //check user is deleted
+    const isDeleted = user === null || user === void 0 ? void 0 : user.isDeleted;
+    if (isDeleted) {
+        throw new AppError_1.default(404, 'User Not Found!');
+    }
+    //check user is blocked
+    const isBlocked = user === null || user === void 0 ? void 0 : user.isBlocked;
+    if (isBlocked) {
+        throw new AppError_1.default(400, 'User is Blocked!');
+    }
+    // check password is matched
+    const isPasswordMatched = yield user_model_1.User.isPasswordMatched(payload === null || payload === void 0 ? void 0 : payload.password, user === null || user === void 0 ? void 0 : user.password);
+    if (!isPasswordMatched) {
+        throw new AppError_1.default(403, 'Password do not matched!');
+    }
+    //create token
+    const jwtPayload = {
+        userId: user._id,
+        role: user.role
+    };
+    const accessToken = (0, auth_utils_1.createToken)(jwtPayload, config_1.default.jwt_access_token_secret, config_1.default.jwt_access_token_expiry);
+    const refreshToken = (0, auth_utils_1.createToken)(jwtPayload, config_1.default.jwt_refresh_token_secret, config_1.default.jwt_refresh_token_expiry);
+    return {
+        accessToken,
+        refreshToken
+    };
+});
 //export Auth Services.
 exports.AuthServices = {
     registerUserIntoDB,

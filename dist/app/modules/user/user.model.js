@@ -57,6 +57,12 @@ UserSchema.statics.isUserExistsByEmail = function (email) {
         return yield exports.User.findOne({ email }).select('+password');
     });
 };
+// this methods for checking user already exists in database.
+UserSchema.statics.isUserExistsBy_id = function (id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield exports.User.findById(id).select('+password');
+    });
+};
 // pre middleware hook for password hashing before document save.
 UserSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -69,4 +75,10 @@ UserSchema.post('save', function (doc, next) {
     doc.password = '';
     next();
 });
+// check password matched.
+UserSchema.statics.isPasswordMatched = function (plainTextPassword, hashedPassword) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield bcrypt_1.default.compare(plainTextPassword, hashedPassword);
+    });
+};
 exports.User = mongoose_1.default.model('User', UserSchema);
