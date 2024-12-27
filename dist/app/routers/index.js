@@ -1,13 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const auth_route_1 = require("../modules/auth/auth.route");
 const routers = (0, express_1.Router)();
 const moduleRoutes = [
     {
-        path: '/',
-        route: (req, res) => {
-            res.send('I am Active');
-        }
+        path: '/auth/',
+        route: auth_route_1.AuthRoutes
     }
 ];
 moduleRoutes.forEach(route => {

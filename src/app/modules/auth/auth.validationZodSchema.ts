@@ -5,7 +5,7 @@ const registerUserValidationZodSchema = z.object({
     name: z.string({
       required_error: 'Name is required'
     }),
-    email: z.coerce
+    email: z
       .string({
         required_error: 'Email is required'
       })
@@ -19,7 +19,7 @@ const registerUserValidationZodSchema = z.object({
 // for user login validation
 const loginUserValidationZodSchema = z.object({
   body: z.object({
-    email: z.coerce
+    email: z
       .string({
         required_error: 'Email is required'
       })

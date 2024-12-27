@@ -12,27 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
-const routers_1 = __importDefault(require("./app/routers"));
-const notFound_1 = __importDefault(require("./app/middleware/notFound"));
-const globalErrorHandler_1 = __importDefault(require("./app/middleware/globalErrorHandler"));
-// app initialization
-const app = (0, express_1.default)();
-// parsers
-app.use(express_1.default.json());
-app.use((0, cors_1.default)());
-//router
-app.use('/api/', routers_1.default);
-// home route
-const homeRoute = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.status(200).json({
-        server: 'Active',
-        success: true,
-        message: 'This is Home Route.'
-    });
+exports.AuthServices = void 0;
+const AppError_1 = __importDefault(require("../../errors/AppError"));
+const user_model_1 = require("../user/user.model");
+// user registration into db
+const registerUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    // checking user already exists
+    if (yield user_model_1.User.isUserExistsByEmail(payload.email)) {
+        throw new AppError_1.default(400, 'This user is already exists!');
+    }
+    //successfully user register
+    const result = yield user_model_1.User.create(payload);
+    return result;
 });
-app.get('/', homeRoute);
-app.use(globalErrorHandler_1.default);
-app.use(notFound_1.default);
-exports.default = app;
+//user login
+const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () { });
+//export Auth Services.
+exports.AuthServices = {
+    registerUserIntoDB,
+    loginUser
+};
