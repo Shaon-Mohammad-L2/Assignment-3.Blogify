@@ -20,7 +20,7 @@ main()
 
 // unhandle reject
 process.on('unhandledRejection', () => {
-  console.log('😡 Unhandle Reject is Detected. Shutting Down....')
+  console.log('😡 Unhandle Rejection is Detected. Shutting Down....')
   if (server) {
     server.close(() => {
       process.exit(1)
