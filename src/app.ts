@@ -12,13 +12,14 @@ app.use(express.json())
 app.use(cors())
 
 //router
-app.use('/api/', routers)
+app.use('/api', routers)
 
 // home route
 const homeRoute = async (req: Request, res: Response) => {
   res.status(200).json({
     server: 'Active',
     success: true,
+    stutas: 200,
     message: 'This is Home Route.'
   })
 }
