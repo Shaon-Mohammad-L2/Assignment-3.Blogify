@@ -20,16 +20,16 @@ const globalErrorHandler_1 = __importDefault(require("./app/middleware/globalErr
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 // app initialization
 const app = (0, express_1.default)();
-// parsers
+// Middlewares for request parsing and CORS setup
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)({
     origin: ['http://localhost:5173', 'http://localhost:5174'],
     credentials: true
 }));
-//router
+// Routes handling
 app.use('/api', routers_1.default);
-// home route
+// Home route to check server status
 const homeRoute = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(200).json({
         server: 'Active',
@@ -39,6 +39,7 @@ const homeRoute = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     });
 });
 app.get('/', homeRoute);
+// Error handling middleware
 app.use(globalErrorHandler_1.default);
 app.use(notFound_1.default);
 exports.default = app;

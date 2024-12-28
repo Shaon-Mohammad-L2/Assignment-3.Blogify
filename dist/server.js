@@ -16,10 +16,13 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const config_1 = __importDefault(require("./app/config"));
 const app_1 = __importDefault(require("./app"));
 let server;
+// Main function to initialize the app and connect to the database
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            // Connecting to the database
             yield mongoose_1.default.connect(config_1.default.database_url);
+            // Starting the server
             server = app_1.default.listen(config_1.default.port, () => {
                 console.log(`Example app listening on port ${config_1.default.port}`);
             });
@@ -30,9 +33,10 @@ function main() {
     });
 }
 main();
-// unhandle reject
+// Handling unhandled promise rejections
 process.on('unhandledRejection', () => {
     console.log('😡 Unhandle Rejection is Detected. Shutting Down....');
+    // Closing the server gracefully in case of unhandled rejection
     if (server) {
         server.close(() => {
             process.exit(1);
@@ -40,7 +44,7 @@ process.on('unhandledRejection', () => {
     }
     process.exit(1);
 });
-//  Uncaught Exception
+// Handling uncaught exceptions
 process.on('uncaughtException', () => {
     console.log('😡 Uncaught Exception is Detected. Shutting Down....');
     process.exit(1);

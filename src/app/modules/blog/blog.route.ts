@@ -6,8 +6,10 @@ import { auth } from '../../middleware/auth'
 
 const router = express.Router()
 
+// Route to fetch all blogs
 router.get('/', BlogControllers.getAllBlogs)
 
+// Route to create a new blog
 router.post(
   '/',
   auth('user'),
@@ -15,6 +17,7 @@ router.post(
   BlogControllers.createBlog
 )
 
+// Route to update an existing blog
 router.patch(
   '/:id',
   auth('user'),
@@ -22,6 +25,7 @@ router.patch(
   BlogControllers.updateBlog
 )
 
+// Route to delete a blog
 router.delete('/:id', auth('user'), BlogControllers.deleteBlog)
 
 export const BlogRoutes = router

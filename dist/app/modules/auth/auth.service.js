@@ -17,45 +17,48 @@ const config_1 = __importDefault(require("../../config"));
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const user_model_1 = require("../user/user.model");
 const auth_utils_1 = require("./auth.utils");
-// user registration into db
+// =================== User Registration Service ===================
+// Handles user registration by adding the user to the database
 const registerUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    // checking user already exists
+    // Check if the user already exists
     if (yield user_model_1.User.isUserExistsByEmail(payload.email)) {
         throw new AppError_1.default(400, 'This user is already exists!');
     }
-    //successfully user register
+    // Successfully register the user
     const result = yield user_model_1.User.create(payload);
     return result;
 });
-//user login
+// =================== User Login Service ===================
+// Handles user login by validating credentials and generating tokens
 const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    // check user in data base.
+    // Check if the user exists in the database
     const user = yield user_model_1.User.isUserExistsByEmail(payload === null || payload === void 0 ? void 0 : payload.email);
-    //check user is exists
     if (!user) {
         throw new AppError_1.default(403, 'Invalid credentials!');
     }
-    //check user is deleted
+    // Check if the user is deleted
     const isDeleted = user === null || user === void 0 ? void 0 : user.isDeleted;
     if (isDeleted) {
         throw new AppError_1.default(404, 'User Not Found!');
     }
-    //check user is blocked
+    // Check if the user is blocked
     const isBlocked = user === null || user === void 0 ? void 0 : user.isBlocked;
     if (isBlocked) {
         throw new AppError_1.default(400, 'User is Blocked!');
     }
-    // check password is matched
+    // Validate the password
     const isPasswordMatched = yield user_model_1.User.isPasswordMatched(payload === null || payload === void 0 ? void 0 : payload.password, user === null || user === void 0 ? void 0 : user.password);
     if (!isPasswordMatched) {
         throw new AppError_1.default(403, 'Password do not matched!');
     }
-    //create token
+    // Create JWT payload
     const jwtPayload = {
         userId: user._id,
         role: user.role
     };
+    // Generate access token
     const accessToken = (0, auth_utils_1.createToken)(jwtPayload, config_1.default.jwt_access_token_secret, config_1.default.jwt_access_token_expiry);
+    // Generate refresh token
     const refreshToken = (0, auth_utils_1.createToken)(jwtPayload, config_1.default.jwt_refresh_token_secret, config_1.default.jwt_refresh_token_expiry);
     return {
         accessToken,

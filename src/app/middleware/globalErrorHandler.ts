@@ -8,12 +8,14 @@ import handleMongooseCastError from '../errors/handleMongooseCastError'
 import handleMongooseDuplicateError from '../errors/handleMongooseDuplicateError'
 import AppError from '../errors/AppError'
 
+// Global Error Handler: Catches and processes different types of errors for consistent response
 const globalErrorHandler = (
   err: any,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  // Initialize default error details
   let statusCode: number = 500
   let message: string = 'Something went wrong!'
   let errorSources: TErrorSources = [
@@ -23,14 +25,14 @@ const globalErrorHandler = (
     }
   ]
 
-  // any zod valiation error checking.
+  // Zod validation error handling
   if (err instanceof ZodError) {
     const simplifiedError = handleZodValidationError(err)
     statusCode = simplifiedError.statusCode
     message = simplifiedError.message
     errorSources = simplifiedError.errorSources
   }
-  // any mongoose validation error checking
+  // Mongoose validation error handling
   else if (err?.name === 'ValidationError') {
     const simplifiedError = handleMongooseValidationError(err)
 
@@ -39,7 +41,7 @@ const globalErrorHandler = (
     errorSources = simplifiedError.errorSources
   }
 
-  // any mongoose cast error
+  // Mongoose cast error handling
   else if (err?.name === 'CastError') {
     const simplifiedError = handleMongooseCastError(err)
 
@@ -48,7 +50,7 @@ const globalErrorHandler = (
     errorSources = simplifiedError.errorSources
   }
 
-  // any mongoose Duplicate error
+  // Mongoose duplicate error handling
   else if (err?.code === 11000) {
     const simplifiedError = handleMongooseDuplicateError(err)
 
@@ -57,7 +59,7 @@ const globalErrorHandler = (
     errorSources = simplifiedError.errorSources
   }
 
-  // our Custom AppError Check.
+  // Custom AppError handling
   else if (err instanceof AppError) {
     statusCode = err?.statusCode
     message = err?.message
@@ -69,7 +71,7 @@ const globalErrorHandler = (
     ]
   }
 
-  // Builtin Error Check
+  // Built-in error handling
   else if (err instanceof Error) {
     message = err?.message
     errorSources = [
@@ -80,7 +82,7 @@ const globalErrorHandler = (
     ]
   }
 
-  // error output pattarn.
+  // Error response structure
   return res.status(statusCode).json({
     success: false,
     statusCode,

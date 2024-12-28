@@ -1,5 +1,8 @@
 import { z } from 'zod'
-//for user registration validation
+
+// =================== User Registration Validation Schema ===================
+
+// Validates the request body for user registration
 const registerUserValidationZodSchema = z.object({
   body: z.object({
     name: z.string({
@@ -16,7 +19,9 @@ const registerUserValidationZodSchema = z.object({
   })
 })
 
-// for user login validation
+// =================== User Login Validation Schema ===================
+
+// Validates the request body for user login
 const loginUserValidationZodSchema = z.object({
   body: z.object({
     email: z
@@ -29,6 +34,8 @@ const loginUserValidationZodSchema = z.object({
     })
   })
 })
+
+// =================== Exporting Validation Schemas ===================
 export const AuthValidationZodSchema = {
   registerUserValidationZodSchema,
   loginUserValidationZodSchema

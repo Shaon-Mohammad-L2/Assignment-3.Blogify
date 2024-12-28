@@ -1,6 +1,9 @@
 import { Model } from 'mongoose'
 
+// Define a type for user roles. Users can either be 'admin' or 'user'.
 export type TRole = 'admin' | 'user'
+
+// Define the structure of the User object
 export interface TUser {
   _id?: string
   name: string
@@ -11,6 +14,7 @@ export interface TUser {
   isDeleted: boolean
 }
 
+// Define custom methods for the Mongoose User model
 export interface UserModel extends Model<TUser> {
   isUserExistsByEmail(email: string): Promise<TUser>
   isUserExistsBy_id(id: string): Promise<TUser>

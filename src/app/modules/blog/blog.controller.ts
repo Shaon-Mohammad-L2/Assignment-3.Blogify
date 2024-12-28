@@ -2,7 +2,9 @@ import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { BlogServices } from './blog.service'
 
-//create a blog
+// =================== Blog Controllers ===================
+
+// Create a new blog
 const createBlog = catchAsync(async (req, res) => {
   const result = await BlogServices.createBlogIntoDB(req.body, req.user)
 
@@ -14,7 +16,7 @@ const createBlog = catchAsync(async (req, res) => {
   })
 })
 
-// fetch all blogs
+// Fetch all blogs
 const getAllBlogs = catchAsync(async (req, res) => {
   const result = await BlogServices.getAllBlogsFromDB(req.query)
 
@@ -26,7 +28,7 @@ const getAllBlogs = catchAsync(async (req, res) => {
   })
 })
 
-// update a single blog
+// Update a single blog
 const updateBlog = catchAsync(async (req, res) => {
   const { id } = req.params
   const result = await BlogServices.updateBlogIntoDB(id, req.body, req.user)
@@ -38,7 +40,7 @@ const updateBlog = catchAsync(async (req, res) => {
   })
 })
 
-// delete a single blog
+// Delete a single blog
 const deleteBlog = catchAsync(async (req, res) => {
   const { id } = req.params
   const result = await BlogServices.deleteBlogFromDB(id, req.user)
@@ -51,7 +53,7 @@ const deleteBlog = catchAsync(async (req, res) => {
   })
 })
 
-// export Blog controllers
+// Export Blog Controllers
 export const BlogControllers = {
   createBlog,
   getAllBlogs,

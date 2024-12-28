@@ -4,6 +4,7 @@ import { UserRole } from './user.constant'
 import bcrypt from 'bcrypt'
 import config from '../../config'
 
+// Define the User schema
 const UserSchema = new mongoose.Schema<TUser, UserModel>(
   {
     name: {
@@ -42,17 +43,19 @@ const UserSchema = new mongoose.Schema<TUser, UserModel>(
   }
 )
 
-// this methods for checking user already exists in database.
+// Check if user exists by email (with password selection)
 UserSchema.statics.isUserExistsByEmail = async function (email: string) {
   return await User.findOne({ email }).select('+password')
 }
 
-// this methods for checking user already exists in database.
+// Check if user exists by ID (with password selection)
 UserSchema.statics.isUserExistsBy_id = async function (id: string) {
-  return await User.findById(id).select('+password')
+  return await User.findById(id, {}, { skipMiddleware: true }).select(
+    '+password'
+  )
 }
 
-// pre middleware hook for password hashing before document save.
+// Pre-save middleware for hashing the user's password
 UserSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(
     this.password,
@@ -61,13 +64,13 @@ UserSchema.pre('save', async function (next) {
   next()
 })
 
-// post middleware hook for password avoing in client side after document save.
+// Post-save middleware for removing the password from the document after saving
 UserSchema.post('save', function (doc, next) {
   doc.password = ''
   next()
 })
 
-// check password matched.
+// Check if password matches using bcrypt
 UserSchema.statics.isPasswordMatched = async function (
   plainTextPassword: string,
   hashedPassword: string
@@ -75,13 +78,13 @@ UserSchema.statics.isPasswordMatched = async function (
   return await bcrypt.compare(plainTextPassword, hashedPassword)
 }
 
-// check user already deleted or not.
+// Check if the user is already marked as deleted
 UserSchema.statics.isUserAlreadyDeleted = async function (id: string) {
   const isDeleted = await User.findById(id, {}, { skipMiddleware: true })
   return isDeleted?.isDeleted
 }
 
-// Middleware to exclude `isDeleted: true` users during `find` operations unless skipped.
+// Middleware to exclude deleted users from `find` operations unless skipped
 UserSchema.pre('find', async function (next) {
   const skipMiddleware = this.getOptions().skipMiddleware
 
@@ -91,7 +94,7 @@ UserSchema.pre('find', async function (next) {
   next()
 })
 
-// Middleware to exclude `isDeleted: true` users during `findOne` operations unless skipped.
+// Middleware to exclude deleted users from `findOne` operations unless skipped
 UserSchema.pre('findOne', async function (next) {
   const skipMiddleware = this.getOptions().skipMiddleware
 
@@ -101,12 +104,15 @@ UserSchema.pre('findOne', async function (next) {
   next()
 })
 
-// Middleware to exclude `isDeleted: true` items during aggregation operations.
+// Middleware to exclude deleted users from aggregation operations
 UserSchema.pre('aggregate', async function (next) {
   this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } })
 
   next()
 })
 
+// Add a full-text index on name, email, and role fields
 UserSchema.index({ name: 'text', email: 'text', role: 'text' })
+
+// Create the User model based on the schema
 export const User = mongoose.model<TUser, UserModel>('User', UserSchema)

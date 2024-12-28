@@ -1,3 +1,4 @@
+// Custom error class for handling application-specific errors
 export default class AppError extends Error {
   constructor(
     public statusCode: number,

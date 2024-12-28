@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// Handles Mongoose validation errors and formats response
 const handleMongooseValidationError = (err) => {
     const errorSources = Object.values(err.errors).map((val) => {
         return {

@@ -16,7 +16,8 @@ exports.BlogControllers = void 0;
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const blog_service_1 = require("./blog.service");
-//create a blog
+// =================== Blog Controllers ===================
+// Create a new blog
 const createBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield blog_service_1.BlogServices.createBlogIntoDB(req.body, req.user);
     (0, sendResponse_1.default)(res, {
@@ -26,7 +27,7 @@ const createBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
         data: result
     });
 }));
-// fetch all blogs
+// Fetch all blogs
 const getAllBlogs = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield blog_service_1.BlogServices.getAllBlogsFromDB(req.query);
     (0, sendResponse_1.default)(res, {
@@ -36,21 +37,10 @@ const getAllBlogs = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
         data: result
     });
 }));
-//fatch a single blog
-const getSingle = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const result = yield blog_service_1.BlogServices.getSingleBlogFrom(id);
-    (0, sendResponse_1.default)(res, {
-        statusCode: 200,
-        success: true,
-        message: 'Blog fetched successfully',
-        data: result
-    });
-}));
-// update a single blog
+// Update a single blog
 const updateBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const result = yield blog_service_1.BlogServices.updateBlogIntoDB(id, req.body);
+    const result = yield blog_service_1.BlogServices.updateBlogIntoDB(id, req.body, req.user);
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
         success: true,
@@ -58,10 +48,10 @@ const updateBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
         data: result
     });
 }));
-// delete a single blog
+// Delete a single blog
 const deleteBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const result = yield blog_service_1.BlogServices.deleteBlogFromDB(id);
+    const result = yield blog_service_1.BlogServices.deleteBlogFromDB(id, req.user);
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
         success: true,
@@ -69,11 +59,10 @@ const deleteBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
         data: result
     });
 }));
-// export Blog controllers
+// Export Blog Controllers
 exports.BlogControllers = {
     createBlog,
     getAllBlogs,
-    getSingle,
     updateBlog,
     deleteBlog
 };

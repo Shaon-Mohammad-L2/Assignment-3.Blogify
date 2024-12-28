@@ -1,5 +1,6 @@
 import { FilterQuery, Query } from 'mongoose'
 
+// QueryBuilder for Mongoose queries.
 class QueryBuilder<T> {
   constructor(
     public modelQuery: Query<T[], T>,
@@ -8,6 +9,8 @@ class QueryBuilder<T> {
     this.modelQuery = modelQuery
     this.query = query
   }
+
+  // Adds search conditions to query.
 
   search(searchAbleFileds: string[]) {
     const search = this?.query?.search
@@ -25,6 +28,7 @@ class QueryBuilder<T> {
     return this
   }
 
+  //Applies filters to the query.
   filter(key: string) {
     const queryObj = { ...this.query }
     if (this?.query?.filter) {
@@ -35,7 +39,7 @@ class QueryBuilder<T> {
     this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>)
     return this
   }
-
+  //Adds sorting conditions to query.
   sort() {
     const sortBy = (this?.query?.sortBy as string)?.split(',') || ['createdAt']
 

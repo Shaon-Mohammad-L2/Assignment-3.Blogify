@@ -17,6 +17,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const user_constant_1 = require("./user.constant");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const config_1 = __importDefault(require("../../config"));
+// Define the User schema
 const UserSchema = new mongoose_1.default.Schema({
     name: {
         type: String,
@@ -51,34 +52,71 @@ const UserSchema = new mongoose_1.default.Schema({
 }, {
     timestamps: true
 });
-// this methods for checking user already exists in database.
+// Check if user exists by email (with password selection)
 UserSchema.statics.isUserExistsByEmail = function (email) {
     return __awaiter(this, void 0, void 0, function* () {
         return yield exports.User.findOne({ email }).select('+password');
     });
 };
-// this methods for checking user already exists in database.
+// Check if user exists by ID (with password selection)
 UserSchema.statics.isUserExistsBy_id = function (id) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield exports.User.findById(id).select('+password');
+        return yield exports.User.findById(id, {}, { skipMiddleware: true }).select('+password');
     });
 };
-// pre middleware hook for password hashing before document save.
+// Pre-save middleware for hashing the user's password
 UserSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         this.password = yield bcrypt_1.default.hash(this.password, Number(config_1.default.bcrypt_salt_rounds));
         next();
     });
 });
-// post middleware hook for password avoing in client side after document save.
+// Post-save middleware for removing the password from the document after saving
 UserSchema.post('save', function (doc, next) {
     doc.password = '';
     next();
 });
-// check password matched.
+// Check if password matches using bcrypt
 UserSchema.statics.isPasswordMatched = function (plainTextPassword, hashedPassword) {
     return __awaiter(this, void 0, void 0, function* () {
         return yield bcrypt_1.default.compare(plainTextPassword, hashedPassword);
     });
 };
+// Check if the user is already marked as deleted
+UserSchema.statics.isUserAlreadyDeleted = function (id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const isDeleted = yield exports.User.findById(id, {}, { skipMiddleware: true });
+        return isDeleted === null || isDeleted === void 0 ? void 0 : isDeleted.isDeleted;
+    });
+};
+// Middleware to exclude deleted users from `find` operations unless skipped
+UserSchema.pre('find', function (next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const skipMiddleware = this.getOptions().skipMiddleware;
+        if (!skipMiddleware) {
+            this.find({ isDeleted: { $ne: true } });
+        }
+        next();
+    });
+});
+// Middleware to exclude deleted users from `findOne` operations unless skipped
+UserSchema.pre('findOne', function (next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const skipMiddleware = this.getOptions().skipMiddleware;
+        if (!skipMiddleware) {
+            this.findOne({ isDeleted: { $ne: true } });
+        }
+        next();
+    });
+});
+// Middleware to exclude deleted users from aggregation operations
+UserSchema.pre('aggregate', function (next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+        next();
+    });
+});
+// Add a full-text index on name, email, and role fields
+UserSchema.index({ name: 'text', email: 'text', role: 'text' });
+// Create the User model based on the schema
 exports.User = mongoose_1.default.model('User', UserSchema);

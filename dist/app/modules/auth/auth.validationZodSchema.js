@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthValidationZodSchema = void 0;
 const zod_1 = require("zod");
-//for user registration validation
+// =================== User Registration Validation Schema ===================
+// Validates the request body for user registration
 const registerUserValidationZodSchema = zod_1.z.object({
     body: zod_1.z.object({
         name: zod_1.z.string({
@@ -18,7 +19,8 @@ const registerUserValidationZodSchema = zod_1.z.object({
         })
     })
 });
-// for user login validation
+// =================== User Login Validation Schema ===================
+// Validates the request body for user login
 const loginUserValidationZodSchema = zod_1.z.object({
     body: zod_1.z.object({
         email: zod_1.z
@@ -31,6 +33,7 @@ const loginUserValidationZodSchema = zod_1.z.object({
         })
     })
 });
+// =================== Exporting Validation Schemas ===================
 exports.AuthValidationZodSchema = {
     registerUserValidationZodSchema,
     loginUserValidationZodSchema

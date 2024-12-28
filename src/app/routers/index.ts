@@ -5,6 +5,7 @@ import { AdminRoutes } from '../modules/admin/admin.route'
 
 const routers = Router()
 
+// Define an array of module routes with paths and corresponding route handlers
 const moduleRoutes = [
   {
     path: '/auth',
@@ -20,6 +21,7 @@ const moduleRoutes = [
   }
 ]
 
+// Loop through the module routes and use the respective route handlers for each path
 moduleRoutes.forEach(route => {
   routers.use(route.path, route.route)
 })

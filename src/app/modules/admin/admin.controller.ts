@@ -2,6 +2,7 @@ import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { AdminServices } from './admin.service'
 
+// Controller to fetch all users
 const getAllUsers = catchAsync(async (req, res) => {
   const result = await AdminServices.getAllUsersFromDB(req.query)
 
@@ -13,6 +14,7 @@ const getAllUsers = catchAsync(async (req, res) => {
   })
 })
 
+// Controller to fetch a single user
 const getSingleUser = catchAsync(async (req, res) => {
   const { userId } = req.params
   const result = await AdminServices.getSingleUserFromDB(userId)
@@ -25,7 +27,7 @@ const getSingleUser = catchAsync(async (req, res) => {
   })
 })
 
-// block user
+// Controller to block a user
 const userBlocked = catchAsync(async (req, res) => {
   const { userId } = req.params
   const result = await AdminServices.userBlockedIntoDB(userId)
@@ -37,10 +39,11 @@ const userBlocked = catchAsync(async (req, res) => {
     data: result
   })
 })
-// delete user
-const userDeleted = catchAsync(async (req, res) => {
+
+// Controller to delete a user
+const userDeleted = catchAsync(async (req, res, next) => {
   const { userId } = req.params
-  const result = await AdminServices.userDeletedIntoDB(userId)
+  const result = await AdminServices.userDeletedIntoDB(userId, next)
 
   sendResponse(res, {
     statusCode: 200,
@@ -50,9 +53,9 @@ const userDeleted = catchAsync(async (req, res) => {
   })
 })
 
-// ================Blogs Releted Controllers .
+// =================== Blog Related Controllers ===================
 
-//fatch a single blog
+// Controller to fetch a single blog
 const getSingleBlog = catchAsync(async (req, res) => {
   const { id } = req.params
   const result = await AdminServices.getSingleBlogFromDB(id)
@@ -65,7 +68,7 @@ const getSingleBlog = catchAsync(async (req, res) => {
   })
 })
 
-//private a single blog
+// Controller to private a single blog
 const privateTheBlog = catchAsync(async (req, res) => {
   const { id } = req.params
   const result = await AdminServices.privateTheBlogIntoDB(id)
@@ -78,7 +81,7 @@ const privateTheBlog = catchAsync(async (req, res) => {
   })
 })
 
-// delete post / blog
+// Controller to delete a blog post
 const deleteBlog = catchAsync(async (req, res) => {
   const { id } = req.params
   const result = await AdminServices.deleteBlogPostIntoDB(id)
@@ -91,6 +94,7 @@ const deleteBlog = catchAsync(async (req, res) => {
   })
 })
 
+// Exporting all admin controllers
 export const AdminControllers = {
   getAllUsers,
   getSingleUser,

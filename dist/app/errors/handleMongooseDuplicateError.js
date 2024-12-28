@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// Handles Mongoose duplicate key error and formats response
 const handleMongooseDuplicateError = (err) => {
     var _a, _b;
     const match = err.message.match(/dup key: \{\s*([^:]+):\s*"([^"]+)"\s*\}/);

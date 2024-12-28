@@ -17,7 +17,8 @@ const config_1 = __importDefault(require("../../config"));
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const auth_service_1 = require("./auth.service");
-// user registration
+// =================== User Registration Controller ===================
+// Controller to handle user registration
 const registerUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield auth_service_1.AuthServices.registerUserIntoDB(req.body);
     (0, sendResponse_1.default)(res, {
@@ -27,10 +28,12 @@ const registerUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
         data: result
     });
 }));
-//user login
+// =================== User Login Controller ===================
+// Controller to handle user login
 const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield auth_service_1.AuthServices.loginUser(req.body);
     const { accessToken, refreshToken } = result;
+    // Setting the refresh token as a secure HTTP-only cookie
     res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
         secure: config_1.default.NODE_ENV === 'production'
@@ -42,6 +45,7 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
         data: { token: accessToken }
     });
 }));
+// Exporting the authentication controllers
 exports.AuthControllers = {
     registerUser,
     loginUser

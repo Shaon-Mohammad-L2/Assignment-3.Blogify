@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// Custom error class for handling application-specific errors
 class AppError extends Error {
     constructor(statusCode, message, stack = '') {
         super(message);

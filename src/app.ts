@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser'
 // app initialization
 const app = express()
 
-// parsers
+// Middlewares for request parsing and CORS setup
 app.use(express.json())
 app.use(cookieParser())
 app.use(
@@ -18,10 +18,10 @@ app.use(
   })
 )
 
-//router
+// Routes handling
 app.use('/api', routers)
 
-// home route
+// Home route to check server status
 const homeRoute = async (req: Request, res: Response) => {
   res.status(200).json({
     server: 'Active',
@@ -33,6 +33,7 @@ const homeRoute = async (req: Request, res: Response) => {
 
 app.get('/', homeRoute)
 
+// Error handling middleware
 app.use(globalErrorHandler as unknown as express.ErrorRequestHandler)
 app.use(notFound as unknown as express.ErrorRequestHandler)
 

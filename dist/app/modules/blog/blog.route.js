@@ -10,9 +10,12 @@ const blog_validationZodSchema_1 = require("./blog.validationZodSchema");
 const blog_controller_1 = require("./blog.controller");
 const auth_1 = require("../../middleware/auth");
 const router = express_1.default.Router();
+// Route to fetch all blogs
 router.get('/', blog_controller_1.BlogControllers.getAllBlogs);
-router.get('/:id', blog_controller_1.BlogControllers.getAllBlogs);
+// Route to create a new blog
 router.post('/', (0, auth_1.auth)('user'), (0, validateRequest_1.default)(blog_validationZodSchema_1.BlogValidation.createBlogValidationZodSchema), blog_controller_1.BlogControllers.createBlog);
-router.patch('/:id', (0, validateRequest_1.default)(blog_validationZodSchema_1.BlogValidation.updateBlogValidationZodSchema), blog_controller_1.BlogControllers.updateBlog);
-router.delete('/:id', blog_controller_1.BlogControllers.deleteBlog);
+// Route to update an existing blog
+router.patch('/:id', (0, auth_1.auth)('user'), (0, validateRequest_1.default)(blog_validationZodSchema_1.BlogValidation.updateBlogValidationZodSchema), blog_controller_1.BlogControllers.updateBlog);
+// Route to delete a blog
+router.delete('/:id', (0, auth_1.auth)('user'), blog_controller_1.BlogControllers.deleteBlog);
 exports.BlogRoutes = router;

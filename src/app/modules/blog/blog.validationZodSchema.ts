@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+// Validation schema for creating a new blog
 const createBlogValidationZodSchema = z.object({
   body: z.object({
     title: z
@@ -13,6 +14,7 @@ const createBlogValidationZodSchema = z.object({
   })
 })
 
+// Validation schema for updating an existing blog
 const updateBlogValidationZodSchema = z.object({
   body: z.object({
     title: z
@@ -29,6 +31,7 @@ const updateBlogValidationZodSchema = z.object({
   })
 })
 
+// Exporting the validation schemas to be used in controllers
 export const BlogValidation = {
   createBlogValidationZodSchema,
   updateBlogValidationZodSchema

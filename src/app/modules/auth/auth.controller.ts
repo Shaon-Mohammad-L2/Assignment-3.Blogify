@@ -3,7 +3,9 @@ import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { AuthServices } from './auth.service'
 
-// user registration
+// =================== User Registration Controller ===================
+
+// Controller to handle user registration
 const registerUser = catchAsync(async (req, res) => {
   const result = await AuthServices.registerUserIntoDB(req.body)
 
@@ -15,11 +17,14 @@ const registerUser = catchAsync(async (req, res) => {
   })
 })
 
-//user login
+// =================== User Login Controller ===================
+
+// Controller to handle user login
 const loginUser = catchAsync(async (req, res) => {
   const result = await AuthServices.loginUser(req.body)
   const { accessToken, refreshToken } = result
 
+  // Setting the refresh token as a secure HTTP-only cookie
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: config.NODE_ENV === 'production'
@@ -32,6 +37,8 @@ const loginUser = catchAsync(async (req, res) => {
     data: { token: accessToken }
   })
 })
+
+// Exporting the authentication controllers
 export const AuthControllers = {
   registerUser,
   loginUser

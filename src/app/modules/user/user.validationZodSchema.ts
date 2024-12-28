@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+// Define the schema for creating a user
 const createUserValidationZodSchema = z.object({
   body: z.object({
     name: z.string({

@@ -10,7 +10,9 @@ const handleMongooseValidationError_1 = __importDefault(require("../errors/handl
 const handleMongooseCastError_1 = __importDefault(require("../errors/handleMongooseCastError"));
 const handleMongooseDuplicateError_1 = __importDefault(require("../errors/handleMongooseDuplicateError"));
 const AppError_1 = __importDefault(require("../errors/AppError"));
+// Global Error Handler: Catches and processes different types of errors for consistent response
 const globalErrorHandler = (err, req, res, next) => {
+    // Initialize default error details
     let statusCode = 500;
     let message = 'Something went wrong!';
     let errorSources = [
@@ -19,35 +21,35 @@ const globalErrorHandler = (err, req, res, next) => {
             message: 'Something went wrong!'
         }
     ];
-    // any zod valiation error checking.
+    // Zod validation error handling
     if (err instanceof zod_1.ZodError) {
         const simplifiedError = (0, handleZodValidationError_1.default)(err);
         statusCode = simplifiedError.statusCode;
         message = simplifiedError.message;
         errorSources = simplifiedError.errorSources;
     }
-    // any mongoose validation error checking
+    // Mongoose validation error handling
     else if ((err === null || err === void 0 ? void 0 : err.name) === 'ValidationError') {
         const simplifiedError = (0, handleMongooseValidationError_1.default)(err);
         statusCode = simplifiedError.statusCode;
         message = simplifiedError.message;
         errorSources = simplifiedError.errorSources;
     }
-    // any mongoose cast error
+    // Mongoose cast error handling
     else if ((err === null || err === void 0 ? void 0 : err.name) === 'CastError') {
         const simplifiedError = (0, handleMongooseCastError_1.default)(err);
         statusCode = simplifiedError.statusCode;
         message = simplifiedError.message;
         errorSources = simplifiedError.errorSources;
     }
-    // any mongoose Duplicate error
+    // Mongoose duplicate error handling
     else if ((err === null || err === void 0 ? void 0 : err.code) === 11000) {
         const simplifiedError = (0, handleMongooseDuplicateError_1.default)(err);
         statusCode = simplifiedError.statusCode;
         message = simplifiedError.message;
         errorSources = simplifiedError.errorSources;
     }
-    // our Custom AppError Check.
+    // Custom AppError handling
     else if (err instanceof AppError_1.default) {
         statusCode = err === null || err === void 0 ? void 0 : err.statusCode;
         message = err === null || err === void 0 ? void 0 : err.message;
@@ -58,7 +60,7 @@ const globalErrorHandler = (err, req, res, next) => {
             }
         ];
     }
-    // Builtin Error Check
+    // Built-in error handling
     else if (err instanceof Error) {
         message = err === null || err === void 0 ? void 0 : err.message;
         errorSources = [
@@ -68,7 +70,7 @@ const globalErrorHandler = (err, req, res, next) => {
             }
         ];
     }
-    // error output pattarn.
+    // Error response structure
     return res.status(statusCode).json({
         success: false,
         statusCode,

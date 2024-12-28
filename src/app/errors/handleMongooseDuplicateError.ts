@@ -1,5 +1,6 @@
 import { TErrorSources, TGenericErrorResponse } from '../interface/error'
 
+// Handles Mongoose duplicate key error and formats response
 const handleMongooseDuplicateError = (err: any): TGenericErrorResponse => {
   const match = err.message.match(/dup key: \{\s*([^:]+):\s*"([^"]+)"\s*\}/)
   const fieldName = match?.[1]?.trim() || 'unknown_field'

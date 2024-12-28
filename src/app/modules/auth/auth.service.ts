@@ -5,39 +5,43 @@ import { User } from '../user/user.model'
 import { TLoginUser } from './auth.interface'
 import { createToken } from './auth.utils'
 
-// user registration into db
+// =================== User Registration Service ===================
+
+// Handles user registration by adding the user to the database
 const registerUserIntoDB = async (payload: TUser) => {
-  // checking user already exists
+  // Check if the user already exists
   if (await User.isUserExistsByEmail(payload.email)) {
     throw new AppError(400, 'This user is already exists!')
   }
-  //successfully user register
+
+  // Successfully register the user
   const result = await User.create(payload)
   return result
 }
 
-//user login
+// =================== User Login Service ===================
+
+// Handles user login by validating credentials and generating tokens
 const loginUser = async (payload: TLoginUser) => {
-  // check user in data base.
+  // Check if the user exists in the database
   const user = await User.isUserExistsByEmail(payload?.email)
-  //check user is exists
   if (!user) {
     throw new AppError(403, 'Invalid credentials!')
   }
 
-  //check user is deleted
+  // Check if the user is deleted
   const isDeleted = user?.isDeleted
   if (isDeleted) {
     throw new AppError(404, 'User Not Found!')
   }
 
-  //check user is blocked
+  // Check if the user is blocked
   const isBlocked = user?.isBlocked
   if (isBlocked) {
     throw new AppError(400, 'User is Blocked!')
   }
 
-  // check password is matched
+  // Validate the password
   const isPasswordMatched = await User.isPasswordMatched(
     payload?.password,
     user?.password
@@ -46,19 +50,20 @@ const loginUser = async (payload: TLoginUser) => {
     throw new AppError(403, 'Password do not matched!')
   }
 
-  //create token
-
+  // Create JWT payload
   const jwtPayload = {
     userId: user._id as string,
     role: user.role
   }
 
+  // Generate access token
   const accessToken = createToken(
     jwtPayload,
     config.jwt_access_token_secret as string,
     config.jwt_access_token_expiry as string
   )
 
+  // Generate refresh token
   const refreshToken = createToken(
     jwtPayload,
     config.jwt_refresh_token_secret as string,

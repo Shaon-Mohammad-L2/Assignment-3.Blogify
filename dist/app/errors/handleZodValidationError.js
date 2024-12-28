@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// Handles Zod validation errors and formats response
 const handleZodValidationError = (err) => {
     const errorSources = err.issues.map((issue) => {
         return {
