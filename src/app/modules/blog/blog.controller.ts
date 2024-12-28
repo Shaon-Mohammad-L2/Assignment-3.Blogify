@@ -26,23 +26,10 @@ const getAllBlogs = catchAsync(async (req, res) => {
   })
 })
 
-//fatch a single blog
-const getSingle = catchAsync(async (req, res) => {
-  const { id } = req.params
-  const result = await BlogServices.getSingleBlogFrom(id)
-
-  sendResponse(res, {
-    statusCode: 200,
-    success: true,
-    message: 'Blog fetched successfully',
-    data: result
-  })
-})
-
 // update a single blog
 const updateBlog = catchAsync(async (req, res) => {
   const { id } = req.params
-  const result = await BlogServices.updateBlogIntoDB(id, req.body)
+  const result = await BlogServices.updateBlogIntoDB(id, req.body, req.user)
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -54,7 +41,7 @@ const updateBlog = catchAsync(async (req, res) => {
 // delete a single blog
 const deleteBlog = catchAsync(async (req, res) => {
   const { id } = req.params
-  const result = await BlogServices.deleteBlogFromDB(id)
+  const result = await BlogServices.deleteBlogFromDB(id, req.user)
 
   sendResponse(res, {
     statusCode: 200,
@@ -68,7 +55,6 @@ const deleteBlog = catchAsync(async (req, res) => {
 export const BlogControllers = {
   createBlog,
   getAllBlogs,
-  getSingle,
   updateBlog,
   deleteBlog
 }

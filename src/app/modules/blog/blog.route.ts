@@ -7,7 +7,6 @@ import { auth } from '../../middleware/auth'
 const router = express.Router()
 
 router.get('/', BlogControllers.getAllBlogs)
-router.get('/:id', BlogControllers.getAllBlogs)
 
 router.post(
   '/',
@@ -18,10 +17,11 @@ router.post(
 
 router.patch(
   '/:id',
+  auth('user'),
   validateRequest(BlogValidation.updateBlogValidationZodSchema),
   BlogControllers.updateBlog
 )
 
-router.delete('/:id', BlogControllers.deleteBlog)
+router.delete('/:id', auth('user'), BlogControllers.deleteBlog)
 
 export const BlogRoutes = router

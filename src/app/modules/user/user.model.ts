@@ -75,4 +75,37 @@ UserSchema.statics.isPasswordMatched = async function (
   return await bcrypt.compare(plainTextPassword, hashedPassword)
 }
 
+// check user already deleted or not.
+UserSchema.statics.isUserAlreadyDeleted = async function (id: string) {
+  const isDeleted = await User.findById(id, {}, { skipMiddleware: true })
+  return isDeleted?.isDeleted
+}
+
+// Middleware to exclude `isDeleted: true` users during `find` operations unless skipped.
+UserSchema.pre('find', async function (next) {
+  const skipMiddleware = this.getOptions().skipMiddleware
+
+  if (!skipMiddleware) {
+    this.find({ isDeleted: { $ne: true } })
+  }
+  next()
+})
+
+// Middleware to exclude `isDeleted: true` users during `findOne` operations unless skipped.
+UserSchema.pre('findOne', async function (next) {
+  const skipMiddleware = this.getOptions().skipMiddleware
+
+  if (!skipMiddleware) {
+    this.findOne({ isDeleted: { $ne: true } })
+  }
+  next()
+})
+
+// Middleware to exclude `isDeleted: true` items during aggregation operations.
+UserSchema.pre('aggregate', async function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } })
+
+  next()
+})
+
 export const User = mongoose.model<TUser, UserModel>('User', UserSchema)
