@@ -108,4 +108,5 @@ UserSchema.pre('aggregate', async function (next) {
   next()
 })
 
+UserSchema.index({ name: 'text', email: 'text', role: 'text' })
 export const User = mongoose.model<TUser, UserModel>('User', UserSchema)

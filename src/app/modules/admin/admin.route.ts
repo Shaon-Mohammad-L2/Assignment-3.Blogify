@@ -26,6 +26,6 @@ router.patch(
   auth('admin'),
   AdminControllers.privateTheBlog
 )
-router.delete('/blogs/:id', AdminControllers.deleteBlog)
+router.delete('/blogs/:id', auth('admin'), AdminControllers.deleteBlog)
 
 export const AdminRoutes = router

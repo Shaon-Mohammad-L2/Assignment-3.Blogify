@@ -3,7 +3,7 @@ import sendResponse from '../../utils/sendResponse'
 import { AdminServices } from './admin.service'
 
 const getAllUsers = catchAsync(async (req, res) => {
-  const result = await AdminServices.getAllUsersFromDB()
+  const result = await AdminServices.getAllUsersFromDB(req.query)
 
   sendResponse(res, {
     statusCode: 200,

@@ -71,4 +71,5 @@ BlogSchema.pre('aggregate', async function (next) {
   next()
 })
 
+BlogSchema.index({ title: 'text', content: 'text' })
 export const Blog = mongoose.model<TBlog, BlogModel>('Blog', BlogSchema)

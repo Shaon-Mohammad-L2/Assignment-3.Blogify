@@ -1,9 +1,15 @@
+import QueryBuilder from '../../builder/QueryBuilder'
 import AppError from '../../errors/AppError'
 import { Blog } from '../blog/blog.model'
+import { userSearchableFields } from '../user/user.constant'
 import { User } from '../user/user.model'
 
-const getAllUsersFromDB = async () => {
-  const result = await User.find()
+const getAllUsersFromDB = async (query: Record<string, unknown>) => {
+  const userQuery = new QueryBuilder(User.find(), query)
+    .search(userSearchableFields)
+    .filter('email')
+    .sort()
+  const result = await userQuery.modelQuery
   return result
 }
 
