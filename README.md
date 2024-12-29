@@ -106,6 +106,23 @@ Blogify is a backend solution for a blogging platform where users can write, upd
   - `sortBy`: Sort blogs by `createdAt`, `title`, etc.
   - `sortOrder`: `asc` (ascending) or `desc` (descending).
   - `filter`: Filter blogs by author ID.
+#### Example Request URL:
+`/api/blogs?search=technology&sortBy=createdAt&sortOrder=desc&filter=60b8f42f9c2a3c9b7cbd4f18`
+
+
+### Admin Actions
+
+#### Block User
+- **Method:** PATCH
+- **Endpoint:** `/api/admin/users/:userId/block`
+- **Description:** Block a user (Admin-only action).
+- **Request Header:** `Authorization: Bearer <admin_token>`
+
+#### Delete User
+- **Method:** PATCH
+- **Endpoint:** `/api/admin/users/:userId/delete`
+- **Description:** Delete a user (Admin-only action).
+- **Request Header:** `Authorization: Bearer <admin_token>`
 
 
 
