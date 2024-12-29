@@ -50,4 +50,17 @@ Blogify is a backend solution for a blogging platform where users can write, upd
   "email": "john@example.com",
   "password": "securepassword"
 }
+```
+
+#### Login User
+- **Method:** POST
+- **Endpoint:** `/api/auth/login`
+- **Description:** Authenticate a user and return a JWT.
+- **Request Body:**
+```json
+{
+  "email": "john@example.com",
+  "password": "securepassword"
+}
+```
 
