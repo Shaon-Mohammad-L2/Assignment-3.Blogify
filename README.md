@@ -141,4 +141,22 @@ Blogify is a backend solution for a blogging platform where users can write, upd
 - **Endpoint:** `/api/admin/blogs/:id`
 - **Description:** Delete any blog by its ID (Admin-only action).
 
+## Error Handling
+
+### Types of Errors Handled:
+- **Zod Validation Error**: Handles input validation errors using Zod.
+- **Not Found Error**: Handles cases where a resource (e.g., blog or user) is not found.
+- **Mongoose Validation Error**: Handles validation errors related to Mongoose models.
+- **Mongoose Cast Error**: Handles invalid type casting errors when querying MongoDB.
+- **Mongoose Duplicate Error**: Handles errors when a duplicate value is inserted (e.g., duplicate email).
+- **Custom AppError Handle**: Handles custom application-specific errors with appropriate messages.
+- **Built-in Error Handle**: Handles standard error responses from the framework or libraries.
+- **Authentication Error**: Handles errors related to failed authentication, such as invalid or expired tokens.
+- **Authorization Error**: Handles errors related to insufficient permissions for specific actions.
+- **Internal Server Error**: Catches unhandled errors within the application (e.g., database issues).
+- **Unhandled Promise Rejection**: Catches unhandled promise rejections in asynchronous operations.
+- **Uncaught Exception**: Handles uncaught exceptions that could crash the application.
+- **Global Error Handle**: A global error handler that catches all the above errors and sends appropriate responses to the client.
+
+
 
