@@ -25,3 +25,12 @@ Blogify is a backend solution for a blogging platform where users can write, upd
 - Can register and log in.
 - Can create, update, and delete their own blogs.
 - Cannot perform any admin-specific actions.
+
+
+## Authentication & Authorization
+
+### Authentication:
+- Users are required to log in to perform actions such as writing, updating, or deleting blogs.
+
+### Authorization:
+- Role-based access control ensures that resources and actions are appropriately secured for **Admins** and **Users**.
