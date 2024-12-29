@@ -168,77 +168,79 @@ Blogify is a backend solution for a blogging platform where users can write, upd
 
   ## Modular Pattern Folder Structure
 
-node_modules
-dist
-src
-│
-├── app
-│   └── builder
-│       └── QueryBuilder.ts
-│
-├── config
-│   └── index.ts
-│
-├── errors
-│   ├── AppError.ts
-│   ├── handleMongooseCastError.ts
-│   ├── handleMongooseDuplicateError.ts
-│   ├── handleMongooseValidationError.ts
-│   └── handleZodValidationError.ts
-│
-├── interface
-│   ├── error.ts
-│   └── index.d.ts
-│
-├── middleware
-│   ├── auth.ts
-│   ├── globalErrorHandler.ts
-│   ├── notFound.ts
-│   └── validateRequest.ts
-│
-├── modules
-│   ├── admin
-│   │   ├── admin.controller.ts
-│   │   ├── admin.route.ts
-│   │   └── admin.service.ts
-│   ├── auth
-│   │   ├── auth.controller.ts
-│   │   ├── auth.interface.ts
-│   │   ├── auth.route.ts
-│   │   ├── auth.service.ts
-│   │   ├── auth.utils.ts
-│   │   └── auth.validationZodSchema.ts
-│   ├── blog
-│   │   ├── blog.constant.ts
-│   │   ├── blog.controller.ts
-│   │   ├── blog.interface.ts
-│   │   ├── blog.model.ts
-│   │   ├── blog.route.ts
-│   │   ├── blog.service.ts
-│   │   └── blog.validationZodSchema.ts
-│   └── user
-│       ├── user.constant.ts
-│       ├── user.interface.ts
-│       ├── user.model.ts
-│       └── user.validationZodSchema.ts
-│
-├── routers
-│   └── index.ts
-│
-├── utils
-│   ├── catchAsync.ts
-│   └── sendResponse.ts
-│
-├── app.ts
-├── server.ts
-├── .gitignore
-├── .prettierrc.json
-├── README.md
-├── eslint.config.mjs
-├── package-lock.json
-├── package.json
-├── tsconfig.json
-├── vercel.json
-└── .env
+```plaintext
+📦 Blog Project
+├── 📂 dist                  # Compiled JavaScript files (build output)
+│   ├── 📂 app
+│   ├── 📂 config
+│   ├── 📂 modules
+│   │   ├── 📂 admin
+│   │   │   ├── admin.controller.js
+│   │   │   ├── admin.route.js
+│   │   │   └── admin.service.js
+│   │   ├── 📂 auth
+│   │   │   ├── auth.controller.js
+│   │   │   ├── auth.interface.js
+│   │   │   ├── auth.route.js
+│   │   │   ├── auth.service.js
+│   │   │   ├── auth.utils.js
+│   │   │   └── auth.validationZodSchema.js
+│   │   ├── 📂 blog
+│   │   │   ├── blog.constant.js
+│   │   │   ├── blog.controller.js
+│   │   │   ├── blog.interface.js
+│   │   │   ├── blog.model.js
+│   │   │   ├── blog.route.js
+│   │   │   ├── blog.service.js
+│   │   │   └── blog.validationZodSchema.js
+│   │   └── 📂 user
+│   │       ├── user.constant.js
+│   │       ├── user.interface.js
+│   │       ├── user.model.js
+│   │       └── user.validationZodSchema.js
+│   ├── app.js
+│   ├── routes.js
+│   └── server.js
+├── 📂 src                   # Source TypeScript files
+│   ├── 📂 app
+│   ├── 📂 config            # Configuration files
+│   ├── 📂 modules
+│   │   ├── 📂 admin
+│   │   │   ├── admin.controller.ts
+│   │   │   ├── admin.route.ts
+│   │   │   └── admin.service.ts
+│   │   ├── 📂 auth
+│   │   │   ├── auth.controller.ts
+│   │   │   ├── auth.interface.ts
+│   │   │   ├── auth.route.ts
+│   │   │   ├── auth.service.ts
+│   │   │   ├── auth.utils.ts
+│   │   │   └── auth.validationZodSchema.ts
+│   │   ├── 📂 blog
+│   │   │   ├── blog.constant.ts
+│   │   │   ├── blog.controller.ts
+│   │   │   ├── blog.interface.ts
+│   │   │   ├── blog.model.ts
+│   │   │   ├── blog.route.ts
+│   │   │   ├── blog.service.ts
+│   │   │   └── blog.validationZodSchema.ts
+│   │   └── 📂 user
+│   │       ├── user.constant.ts
+│   │       ├── user.interface.ts
+│   │       ├── user.model.ts
+│   │       └── user.validationZodSchema.ts
+│   ├── app.ts
+│   ├── routes.ts
+│   └── server.ts
+├── 📂 node_modules          # Installed npm dependencies
+├── .env                     # Environment variables (e.g., database connection strings)
+├── .gitignore               # Git ignore file
+├── .prettierrc.json         # Prettier configuration
+├── eslint.config.mjs        # ESLint configuration
+├── package-lock.json        # Dependency lock file
+├── package.json             # Project metadata and dependencies
+├── tsconfig.json            # TypeScript configuration
+└── vercel.json              # Vercel deployment configuration
+```
 
 
