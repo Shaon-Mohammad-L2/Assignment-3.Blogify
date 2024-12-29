@@ -97,5 +97,15 @@ Blogify is a backend solution for a blogging platform where users can write, upd
 - **Description:** Delete a user’s blog by its ID.
 - **Request Header:** `Authorization: Bearer <token>`
 
+#### Get All Blogs
+- **Method:** GET
+- **Endpoint:** `/api/blogs`
+- **Description:** Public API to fetch all blogs with search, sort, and filter options.
+- **Query Parameters:**
+  - `search`: Filter blogs by title or content.
+  - `sortBy`: Sort blogs by `createdAt`, `title`, etc.
+  - `sortOrder`: `asc` (ascending) or `desc` (descending).
+  - `filter`: Filter blogs by author ID.
+
 
 
