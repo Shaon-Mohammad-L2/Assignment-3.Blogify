@@ -23,4 +23,12 @@ router.post(
   AuthControllers.loginUser
 )
 
+// =================== Refresh Token Route ===================
+
+// Route to generate a new refresh token with validation
+router.post(
+  '/refresh-token',
+  validateRequest(AuthValidationZodSchema.refreshTokenValidationZodSchema),
+  AuthControllers.refreshToken
+)
 export const AuthRoutes = router

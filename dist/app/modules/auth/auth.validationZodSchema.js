@@ -33,8 +33,18 @@ const loginUserValidationZodSchema = zod_1.z.object({
         })
     })
 });
+// =================== Refresh Token Validation Schema ===================
+// Schema to validate refresh token requests
+const refreshTokenValidationZodSchema = zod_1.z.object({
+    cookies: zod_1.z.object({
+        refreshToken: zod_1.z.string({
+            required_error: 'Refresh Token is required.'
+        })
+    })
+});
 // =================== Exporting Validation Schemas ===================
 exports.AuthValidationZodSchema = {
     registerUserValidationZodSchema,
-    loginUserValidationZodSchema
+    loginUserValidationZodSchema,
+    refreshTokenValidationZodSchema
 };

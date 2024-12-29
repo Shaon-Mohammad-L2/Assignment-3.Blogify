@@ -45,8 +45,22 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
         data: { token: accessToken }
     });
 }));
+// =================== Refresh Token Controller ===================
+// Generates a new access token using the refresh token
+const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { refreshToken } = req.cookies;
+    const result = yield auth_service_1.AuthServices.refreshToken(refreshToken);
+    const { accessToken } = result;
+    (0, sendResponse_1.default)(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Access Token Regenerate',
+        data: { token: accessToken }
+    });
+}));
 // Exporting the authentication controllers
 exports.AuthControllers = {
     registerUser,
-    loginUser
+    loginUser,
+    refreshToken
 };

@@ -15,4 +15,7 @@ router.post('/register', (0, validateRequest_1.default)(auth_validationZodSchema
 // =================== User Login Route ===================
 // Route to handle user login with validation
 router.post('/login', (0, validateRequest_1.default)(auth_validationZodSchema_1.AuthValidationZodSchema.loginUserValidationZodSchema), auth_controller_1.AuthControllers.loginUser);
+// =================== Refresh Token Route ===================
+// Route to generate a new refresh token with validation
+router.post('/refresh-token', (0, validateRequest_1.default)(auth_validationZodSchema_1.AuthValidationZodSchema.refreshTokenValidationZodSchema), auth_controller_1.AuthControllers.refreshToken);
 exports.AuthRoutes = router;

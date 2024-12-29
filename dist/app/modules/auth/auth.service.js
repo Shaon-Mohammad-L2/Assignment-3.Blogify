@@ -17,6 +17,7 @@ const config_1 = __importDefault(require("../../config"));
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const user_model_1 = require("../user/user.model");
 const auth_utils_1 = require("./auth.utils");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 // =================== User Registration Service ===================
 // Handles user registration by adding the user to the database
 const registerUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
@@ -65,8 +66,45 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         refreshToken
     };
 });
+// =================== Refresh Token Service ===================
+// Validates the refresh token and generates a new access token
+const refreshToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
+    // if the token is sent from the client.
+    if (!token) {
+        throw new AppError_1.default(401, 'You are not authorized.');
+    }
+    // check if the token is valid.
+    const decoded = jsonwebtoken_1.default.verify(token, config_1.default.jwt_refresh_token_secret);
+    const { userId } = decoded;
+    // Check if the user exists in the database
+    const user = yield user_model_1.User.isUserExistsBy_id(userId);
+    if (!user) {
+        throw new AppError_1.default(403, 'Invalid credentials!');
+    }
+    // Check if the user is deleted
+    const isDeleted = user === null || user === void 0 ? void 0 : user.isDeleted;
+    if (isDeleted) {
+        throw new AppError_1.default(404, 'User Not Found!');
+    }
+    // Check if the user is blocked
+    const isBlocked = user === null || user === void 0 ? void 0 : user.isBlocked;
+    if (isBlocked) {
+        throw new AppError_1.default(400, 'User is Blocked!');
+    }
+    // Create JWT payload
+    const jwtPayload = {
+        userId: user._id,
+        role: user.role
+    };
+    // Generate access token
+    const accessToken = (0, auth_utils_1.createToken)(jwtPayload, config_1.default.jwt_access_token_secret, config_1.default.jwt_access_token_expiry);
+    return {
+        accessToken
+    };
+});
 //export Auth Services.
 exports.AuthServices = {
     registerUserIntoDB,
-    loginUser
+    loginUser,
+    refreshToken
 };
