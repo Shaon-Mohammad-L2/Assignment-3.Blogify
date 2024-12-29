@@ -85,5 +85,17 @@ Blogify is a backend solution for a blogging platform where users can write, upd
 }
 ```
 
+#### Update Blog
+- **Method:** PATCH
+- **Endpoint:** `/api/blogs/:id`
+- **Description:** Update a user’s blog by its ID.
+- **Request Header:** `Authorization: Bearer <token>`
+
+#### Delete Blog
+- **Method:** DELETE
+- **Endpoint:** `/api/blogs/:id`
+- **Description:** Delete a user’s blog by its ID.
+- **Request Header:** `Authorization: Bearer <token>`
+
 
 
