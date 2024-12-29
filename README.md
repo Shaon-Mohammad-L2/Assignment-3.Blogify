@@ -107,7 +107,9 @@ Blogify is a backend solution for a blogging platform where users can write, upd
   - `sortOrder`: `asc` (ascending) or `desc` (descending).
   - `filter`: Filter blogs by author ID.
 #### Example Request URL:
-``` /api/blogs?search=technology&sortBy=createdAt&sortOrder=desc&filter=60b8f42f9c2a3c9b7cbd4f18```
+```json
+/api/blogs?search=technology&sortBy=createdAt&sortOrder=desc&filter=60b8f42f9c2a3c9b7cbd4f18
+```
 
 
 ### Admin Actions
