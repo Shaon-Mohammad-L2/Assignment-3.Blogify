@@ -242,5 +242,17 @@ Blogify is a backend solution for a blogging platform where users can write, upd
 ├── tsconfig.json            # TypeScript configuration
 └── vercel.json              # Vercel deployment configuration
 ```
+## Eviroment Variables
+```plaintext
+NODE_ENV = production
+PORT = 5000
+# DATA_BASE_URL = mongodb://localhost:27017
+DATA_BASE_URL = mongodb+srv://<username>:<password>@cluster0.l4wiq.mongodb.net/<database_name>?retryWrites=true&w=majority&appName=Cluster0
+BCRYPT_SALT_ROUNDS = 10
+JWT_ACCESS_TOKEN_SECRET = <your_jwt_access_token_secret>
+JWT_REFRESH_TOKEN_SECRET = <your_jwt_refresh_token_secret>
+JWT_ACCESS_TOKEN_EXPIRES_IN = 3d
+JWT_REFRESH_TOKEN_EXPIRES_IN = 90d
+```
 
 
