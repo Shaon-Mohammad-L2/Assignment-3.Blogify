@@ -34,3 +34,20 @@ Blogify is a backend solution for a blogging platform where users can write, upd
 
 ### Authorization:
 - Role-based access control ensures that resources and actions are appropriately secured for **Admins** and **Users**.
+
+## API Endpoints
+
+### Authentication
+
+#### Register User
+- **Method:** POST
+- **Endpoint:** `/api/auth/register`
+- **Description:** Register a new user.
+- **Request Body:**
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "securepassword"
+}
+
