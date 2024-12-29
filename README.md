@@ -173,61 +173,61 @@ dist
 src
 │
 ├── app
-│ └── builder
-│ └── QueryBuilder.ts
+│   └── builder
+│       └── QueryBuilder.ts
 │
 ├── config
-│ └── index.ts
+│   └── index.ts
 │
 ├── errors
-│ ├── AppError.ts
-│ ├── handleMongooseCastError.ts
-│ ├── handleMongooseDuplicateError.ts
-│ ├── handleMongooseValidationError.ts
-│ └── handleZodValidationError.ts
+│   ├── AppError.ts
+│   ├── handleMongooseCastError.ts
+│   ├── handleMongooseDuplicateError.ts
+│   ├── handleMongooseValidationError.ts
+│   └── handleZodValidationError.ts
 │
 ├── interface
-│ ├── error.ts
-│ └── index.d.ts
+│   ├── error.ts
+│   └── index.d.ts
 │
 ├── middleware
-│ ├── auth.ts
-│ ├── globalErrorHandler.ts
-│ ├── notFound.ts
-│ └── validateRequest.ts
+│   ├── auth.ts
+│   ├── globalErrorHandler.ts
+│   ├── notFound.ts
+│   └── validateRequest.ts
 │
 ├── modules
-│ ├── admin
-│ │ ├── admin.controller.ts
-│ │ ├── admin.route.ts
-│ │ └── admin.service.ts
-│ ├── auth
-│ │ ├── auth.controller.ts
-│ │ ├── auth.interface.ts
-│ │ ├── auth.route.ts
-│ │ ├── auth.service.ts
-│ │ ├── auth.utils.ts
-│ │ └── auth.validationZodSchema.ts
-│ ├── blog
-│ │ ├── blog.constant.ts
-│ │ ├── blog.controller.ts
-│ │ ├── blog.interface.ts
-│ │ ├── blog.model.ts
-│ │ ├── blog.route.ts
-│ │ ├── blog.service.ts
-│ │ └── blog.validationZodSchema.ts
-│ └── user
-│ ├── user.constant.ts
-│ ├── user.interface.ts
-│ ├── user.model.ts
-│ └── user.validationZodSchema.ts
+│   ├── admin
+│   │   ├── admin.controller.ts
+│   │   ├── admin.route.ts
+│   │   └── admin.service.ts
+│   ├── auth
+│   │   ├── auth.controller.ts
+│   │   ├── auth.interface.ts
+│   │   ├── auth.route.ts
+│   │   ├── auth.service.ts
+│   │   ├── auth.utils.ts
+│   │   └── auth.validationZodSchema.ts
+│   ├── blog
+│   │   ├── blog.constant.ts
+│   │   ├── blog.controller.ts
+│   │   ├── blog.interface.ts
+│   │   ├── blog.model.ts
+│   │   ├── blog.route.ts
+│   │   ├── blog.service.ts
+│   │   └── blog.validationZodSchema.ts
+│   └── user
+│       ├── user.constant.ts
+│       ├── user.interface.ts
+│       ├── user.model.ts
+│       └── user.validationZodSchema.ts
 │
 ├── routers
-│ └── index.ts
+│   └── index.ts
 │
 ├── utils
-│ ├── catchAsync.ts
-│ └── sendResponse.ts
+│   ├── catchAsync.ts
+│   └── sendResponse.ts
 │
 ├── app.ts
 ├── server.ts
@@ -240,4 +240,5 @@ src
 ├── tsconfig.json
 ├── vercel.json
 └── .env
+
 
