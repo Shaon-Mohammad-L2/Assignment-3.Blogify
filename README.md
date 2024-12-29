@@ -124,5 +124,19 @@ Blogify is a backend solution for a blogging platform where users can write, upd
 - **Description:** Delete a user (Admin-only action).
 - **Request Header:** `Authorization: Bearer <admin_token>`
 
+#### Get Single Blog
+- **Method:** GET
+- **Endpoint:** `/api/admin/blogs/:id`
+- **Description:** Fetch a single blog's details by its ID.
+
+#### Unpublish Blog
+- **Method:** PATCH
+- **Endpoint:** `/api/admin/blogs/:id/private`
+- **Description:** Unpublish a blog (Admin-only action).
+
+#### Delete Blog
+- **Method:** DELETE
+- **Endpoint:** `/api/admin/blogs/:id`
+- **Description:** Delete any blog by its ID (Admin-only action).
 
 
