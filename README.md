@@ -255,4 +255,12 @@ JWT_ACCESS_TOKEN_EXPIRES_IN = 3d
 JWT_REFRESH_TOKEN_EXPIRES_IN = 90d
 ```
 
+# **Submission Details**
+
+- **Live Deployment Link**: [Blogify - Live](https://assignment-3-blogify.vercel.app/)
+- **GitHub Repository**: [Blogify GitHub Repository](https://github.com/Shaon-Mohammad-L2/Assignment-3.Blogify)
+- **Admin Credentials**:
+  - **Email**: admin123@mail.com
+  - **Password**: admin123
+- **Project Overview Video**: [Watch on Google Drive](https://drive.google.com/file/d/1ewgNsqUPmo3z1oD_BxYBdIWHyZhFl4v0/view?usp=sharing)
 
