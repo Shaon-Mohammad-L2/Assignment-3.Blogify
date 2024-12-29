@@ -70,3 +70,20 @@ Blogify is a backend solution for a blogging platform where users can write, upd
 - **Description:** Generate a new access token using a refresh token.
 
 
+### Blog Management
+
+#### Create Blog
+- **Method:** POST
+- **Endpoint:** `/api/blogs`
+- **Description:** Create a new blog (requires authentication).
+- **Request Header:** `Authorization: Bearer <token>`
+- **Request Body:**
+```json
+{
+  "title": "My First Blog",
+  "content": "This is the content of my blog."
+}
+```
+
+
+
