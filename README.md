@@ -64,3 +64,9 @@ Blogify is a backend solution for a blogging platform where users can write, upd
 }
 ```
 
+#### Refresh Token
+- **Method:** POST
+- **Endpoint:** `/api/auth/refresh-token`
+- **Description:** Generate a new access token using a refresh token.
+
+
