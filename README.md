@@ -159,4 +159,10 @@ Blogify is a backend solution for a blogging platform where users can write, upd
 - **Global Error Handle**: A global error handler that catches all the above errors and sends appropriate responses to the client.
 
 
+## Technologies Used
+
+- **Language:** TypeScript
+- **Frameworks:** Node.js, Express.js
+- **Database:** MongoDB with Mongoose
+- **Validation:** Zod
 
